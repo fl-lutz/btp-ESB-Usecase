@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: btpfunction
+  labels:
+    app: btpfunction
+spec:
+  ports:
+  - name: http
+    port: 3000
+    targetPort: 80
+  selector:
+    app: btpfunction
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: btpfunction
+spec:
+  selector:
+    matchLabels:
+      app: btpfunction
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: btpfunction
+    spec:
+      containers:
+        - image: zofllutz/btpfunction:v1.0.0
+          name: btpfunction
+          ports:
+          - containerPort: 80

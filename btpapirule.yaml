@@ -1,0 +1,18 @@
+
+apiVersion: gateway.kyma-project.io/v1alpha1
+kind: APIRule
+metadata:
+  labels:
+    app: njs
+  name: njs
+spec:
+  gateway: kyma-gateway.kyma-system.svc.cluster.local
+  service:
+    name: njs
+    port: 3000
+    host: test
+  rules:
+    - path: /.*
+      methods: ["GET","POST","PUT","DELETE","HEAD"]
+      accessStrategies:
+        - handler: noop
